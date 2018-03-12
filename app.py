@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/details', methods=['GET'])
 def get_details():
     db = get_db()
-    details_cur = db.execute('select YEAR, LOCALITY, SUBURB, STATE, POSTCODE, COUNT from NSW_BIRTH_RATE')
+    details_cur = db.execute('select YEAR, LOCALITY, SUBURB, STATE, POSTCODE, EMPLOYED, UNEMPLOYED from NSW_EMPLOYMENT_RATE')
     details = details_cur.fetchall()
 
     return_values = []
@@ -18,7 +18,8 @@ def get_details():
         detail_dict['SUBURB']    = detail['SUBURB']
         detail_dict['STATE']     = detail['STATE']
         detail_dict['POSTCODE']  = detail['POSTCODE']
-        detail_dict['COUNT']     = detail['COUNT']
+        detail_dict['EMPLOYED']     = detail['EMPLOYED']
+        detail_dict['UNEMPLOYED']     = detail['UNEMPLOYED']
 
         return_values.append(detail_dict)
 
@@ -27,7 +28,7 @@ def get_details():
 @app.route('/details/<string:SUBURB>', methods=['GET'])
 def get_detail(SUBURB):
     db = get_db()
-    details_cur = db.execute('select YEAR, LOCALITY, SUBURB, STATE, POSTCODE, COUNT from NSW_BIRTH_RATE where SUBURB = ?', [SUBURB])
+    details_cur = db.execute('select YEAR, LOCALITY, SUBURB, STATE, POSTCODE, EMPLOYED, UNEMPLOYED from NSW_EMPLOYMENT_RATE where SUBURB = ?', [SUBURB])
     details = details_cur.fetchall()
 
     return_values = []
@@ -39,7 +40,8 @@ def get_detail(SUBURB):
         detail_dict['SUBURB']    = detail['SUBURB']
         detail_dict['STATE']     = detail['STATE']
         detail_dict['POSTCODE']  = detail['POSTCODE']
-        detail_dict['COUNT']     = detail['COUNT']
+        detail_dict['EMPLOYED']     = detail['EMPLOYED']    
+        detail_dict['UNEMPLOYED']     = detail['UNEMPLOYED']
 
         return_values.append(detail_dict)
 
